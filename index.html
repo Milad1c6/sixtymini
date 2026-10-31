@@ -152,7 +152,8 @@ header p{margin:2px 0 0;color:var(--mut);font-size:12.5px}
 .lg{position:relative;border-radius:30px;background:linear-gradient(145deg,rgba(255,255,255,.17),rgba(255,255,255,.05));border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(26px) saturate(180%);-webkit-backdrop-filter:blur(26px) saturate(180%);box-shadow:inset 0 1.5px 0 rgba(255,255,255,.55),inset 0 -1px 0 rgba(255,255,255,.08),inset 0 0 28px rgba(255,255,255,.04),0 20px 50px -18px rgba(0,0,0,.65);overflow:hidden}
 .lg::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 70% at 18% -10%,rgba(255,255,255,.3),transparent 55%);pointer-events:none}
 .lg::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,0%),rgba(255,236,180,.22),transparent 45%);pointer-events:none;transition:background .1s}
-.orbs{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.orbs{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;opacity:0;transition:opacity .5s}
+body.prof .orbs{opacity:1}
 .orb{position:absolute;border-radius:50%;filter:blur(38px);animation:drift 11s ease-in-out infinite alternate}
 .orb.o1{width:190px;height:190px;background:#c8962b;top:90px;right:-40px;opacity:.55}
 .orb.o2{width:170px;height:170px;background:#2c58d8;top:330px;left:-50px;opacity:.5;animation-delay:-4s}
@@ -188,11 +189,136 @@ header p{margin:2px 0 0;color:var(--mut);font-size:12.5px}
 .nav .blob{position:absolute;top:7px;bottom:7px;width:calc(50% - 7px);border-radius:99px;background:linear-gradient(145deg,rgba(255,236,180,.55),rgba(233,201,120,.28));box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 6px 20px rgba(233,201,120,.3);transition:transform .45s cubic-bezier(.3,1.35,.5,1)}
 .nv{position:relative;width:132px;border:0;background:none;color:#d6cdb6;font:700 13.5px Vazirmatn;padding:13px 0;display:flex;align-items:center;justify-content:center;gap:8px;transition:color .25s}
 .nv.on{color:#fff}.nv svg{font-size:20px}
-#fx{position:fixed;inset:0;z-index:50;pointer-events:none}
+
+/* ===== API-mode UI ===== */
+.nv{width:104px}
+#pgAcc{position:relative;padding-top:22px}
+.ph-t{display:flex;align-items:center;justify-content:space-between;margin:0 2px 14px}
+.ph-t h2{margin:0;font-size:20px;font-weight:900}
+.mini{border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.1);color:#fff;border-radius:99px;padding:8px 14px;font:700 12px Vazirmatn;display:inline-flex;align-items:center;gap:6px;backdrop-filter:blur(12px)}
+.mini:active{transform:scale(.94)}
+.acc{padding:18px;margin-bottom:14px}
+.acc .top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.acc .nm{font-size:15px;font-weight:800;direction:ltr;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.st{font-size:11px;font-weight:800;padding:4px 11px;border-radius:99px;white-space:nowrap}
+.st.active{background:rgba(70,224,192,.15);color:var(--teal);border:1px solid rgba(70,224,192,.35)}
+.st.bad{background:rgba(255,110,110,.14);color:#ff8c8c;border:1px solid rgba(255,110,110,.35)}
+.st.warn{background:rgba(255,190,90,.14);color:#ffc778;border:1px solid rgba(255,190,90,.35)}
+.meter{margin:16px 0 8px;height:11px;border-radius:11px;background:rgba(255,255,255,.12);overflow:hidden}
+.meter i{display:block;height:100%;width:0;border-radius:11px;transition:width 1.1s cubic-bezier(.2,.9,.3,1)}
+.meter.ok i{background:linear-gradient(90deg,#3fd6b4,#7fe9ff)}
+.meter.mid i{background:linear-gradient(90deg,#e9c978,#ffe9a8)}
+.meter.hi i{background:linear-gradient(90deg,#ff8a5c,#ff5c7a)}
+.mrow{display:flex;justify-content:space-between;font-size:12px;color:#d6cdb6}
+.mrow b{color:#fff;font-weight:700}
+.acts{display:flex;gap:8px;margin-top:14px}
+.acts .mini{flex:1;justify-content:center}
+.acts .mini.gold{background:linear-gradient(135deg,rgba(245,220,151,.9),rgba(200,154,60,.9));color:var(--gtx);border-color:transparent}
+.emp{text-align:center;color:var(--mut);padding:50px 20px}
+.emp b{display:block;font-size:34px;margin-bottom:8px}
+.act-row{display:flex;gap:10px;margin-top:14px}
+.act-row .togo{margin-top:0}
+.menu{margin-top:14px;display:flex;flex-direction:column;gap:10px}
+.mi{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:24px;text-align:right;color:#fff;font:700 14.5px Vazirmatn;width:100%;border:1px solid rgba(255,255,255,.2)}
+.mi svg{font-size:22px;color:var(--gold)}
+.mi small{margin-inline-start:auto;color:#d6cdb6;font-weight:400;font-size:11.5px}
+.ban{display:none;align-items:center;justify-content:space-between;gap:10px;margin:0 0 14px;padding:12px 16px;border-radius:18px;background:rgba(233,201,120,.14);border:1px solid rgba(233,201,120,.4);font-size:13px}
+.ban.on{display:flex}
+.ban b{color:var(--gold)}
+#toast{position:fixed;left:50%;top:calc(18px + env(safe-area-inset-top));transform:translate(-50%,-90px);z-index:200;padding:12px 20px;border-radius:99px;font:700 13px Vazirmatn;color:#fff;background:rgba(20,22,32,.92);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(18px);transition:transform .4s cubic-bezier(.3,1.4,.5,1);max-width:90vw;text-align:center}
+#toast.on{transform:translate(-50%,0)}
+#toast.err{border-color:rgba(255,110,110,.6)}
+#gsheet .gh{display:flex;align-items:center;justify-content:space-between;margin:4px 0 12px}
+#gsheet .gh h2{margin:0;font-size:19px;font-weight:800}
+.x{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--g2);color:#fff;font-size:18px;line-height:1}
+.pm{display:flex;align-items:center;gap:14px;width:100%;padding:15px 16px;margin-top:10px;border-radius:20px;border:1px solid var(--line);background:var(--g1);color:var(--tx);font:700 14px Vazirmatn;text-align:right;transition:.2s}
+.pm:active{transform:scale(.98)}
+.pm svg{font-size:22px;color:var(--gold)}
+.pm small{display:block;font-weight:400;color:var(--mut);font-size:11.5px;margin-top:2px}
+.pm .l{margin-inline-start:auto;font-weight:800}
+.pm.dis{opacity:.45}
+.kv{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:13px;color:var(--mut)}
+.kv b{color:var(--tx);font-weight:700;word-break:break-all;direction:ltr;text-align:left}
+.addr{margin:12px 0;padding:14px;border-radius:16px;background:rgba(255,255,255,.05);border:1px dashed rgba(233,201,120,.4);font:600 12.5px monospace;direction:ltr;word-break:break-all;text-align:center;color:#ffe9a8}
+.qrbox{display:flex;justify-content:center;margin:12px 0}
+.qrbox img{width:230px;height:230px;border-radius:20px;background:#fff;padding:10px}
+.amts{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 12px}
+.amts .opt{flex:1 1 30%}
+.inp{width:100%;padding:14px 16px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:#fff;font:700 15px Vazirmatn;outline:none;user-select:text;-webkit-user-select:text}
+.inp:focus{border-color:rgba(233,201,120,.6)}
+.hrow{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.hrow .dt{font-size:11px;color:var(--mut)}
+.hrow .mid{flex:1;min-width:0}.hrow .mid b{display:block;font-size:13.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hrow .pr{font-weight:800;font-size:13.5px;white-space:nowrap}
+.sb{font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:99px;white-space:nowrap}
+.sb.paid,.sb.delivered,.sb.approved{background:rgba(70,224,192,.15);color:var(--teal)}
+.sb.pending{background:rgba(255,190,90,.15);color:#ffc778}
+.sb.rejected{background:rgba(255,110,110,.15);color:#ff8c8c}
+.seg2{display:flex;gap:6px;margin-bottom:6px}
+.seg2 .opt{padding:10px 0}
+.wheelw{position:relative;width:250px;height:250px;margin:6px auto 18px}
+.wheel{width:100%;height:100%;border-radius:50%;transition:transform 4.6s cubic-bezier(.12,.7,.1,1);box-shadow:0 0 0 6px rgba(233,201,120,.9),0 0 50px rgba(233,201,120,.4),inset 0 0 30px rgba(0,0,0,.5)}
+.wheel text{font:800 13px Vazirmatn;fill:#1b1304}
+.ptr{position:absolute;top:-14px;left:50%;margin-left:-14px;width:28px;height:36px;filter:drop-shadow(0 4px 6px rgba(0,0,0,.6));z-index:3}
+.hub{position:absolute;left:50%;top:50%;width:54px;height:54px;margin:-27px;border-radius:50%;background:linear-gradient(135deg,#fbe9b4,#b98a2e);border:3px solid #1b1304;z-index:2;display:grid;place-items:center;font-size:22px}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.kpi{padding:14px;border-radius:20px;border:1px solid var(--line);background:var(--g1)}
+.kpi small{display:block;color:var(--mut);font-size:11.5px}.kpi b{display:block;font-size:17px;font-weight:900;margin-top:4px}
+.kpi.g b{color:var(--gold)}
+.chart{padding:14px;border-radius:20px;border:1px solid var(--line);background:var(--g1);margin-bottom:12px}
+.chart h4{margin:0 0 10px;font-size:13px;color:var(--mut);font-weight:600}
+.chart svg{width:100%;height:110px;display:block}
+.prog{height:8px;border-radius:8px;background:rgba(255,255,255,.12);overflow:hidden;margin:10px 0}
+.prog i{display:block;height:100%;border-radius:8px;background:linear-gradient(90deg,var(--gold2),#fff2c4)}
+.big-ok{text-align:center;padding:10px 0}
+.big-ok .ck{width:84px;height:84px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;font-size:42px;background:linear-gradient(135deg,var(--teal),#3b8cff);color:#04221d;animation:pop .6s cubic-bezier(.2,1.4,.4,1)}
+.big-ok h3{margin:0 0 6px;font-size:20px}.big-ok p{margin:0;color:var(--mut);font-size:13px}
+#fx{position:fixed;inset:0;z-index:150;pointer-events:none}
+
+/* ===== Liquid glass v2 — iOS 26 / Telegram style ===== */
+:root{--rimL:rgba(255,255,255,.62);--rimD:rgba(255,255,255,.2)}
+.lg,.nav,.tabs,.perk,.plan,.mini,.tier,.bdg,.togo,#toast{
+  box-shadow:
+    inset 1.2px 1.2px 0 var(--rimL),
+    inset -1px -1px 0 var(--rimD),
+    inset 0 0 0 .6px rgba(255,255,255,.1),
+    inset 12px 12px 24px -16px rgba(255,255,255,.5),
+    inset -12px -12px 24px -16px rgba(150,195,255,.28),
+    0 18px 40px -18px rgba(0,0,0,.75),0 2px 6px rgba(0,0,0,.22)}
+.lg{border:0;background:linear-gradient(145deg,rgba(255,255,255,.115),rgba(255,255,255,.03) 55%,rgba(255,255,255,.075));
+  backdrop-filter:blur(12px) saturate(200%) brightness(1.08);-webkit-backdrop-filter:blur(12px) saturate(200%) brightness(1.08);
+  transition:transform .45s cubic-bezier(.3,1.5,.5,1),box-shadow .3s}
+.lg::before{background:radial-gradient(130% 60% at 20% -12%,rgba(255,255,255,.34),transparent 52%),linear-gradient(180deg,transparent 60%,rgba(255,255,255,.05))}
+button.lg:active,.lg.acc:active{transform:scale(.97)}
+.tabs,.perk,.plan{border:0}
+.tabs{background:rgba(255,255,255,.06);backdrop-filter:blur(14px) saturate(190%);-webkit-backdrop-filter:blur(14px) saturate(190%)}
+.perk{background:rgba(255,255,255,.05);backdrop-filter:blur(12px) saturate(190%);-webkit-backdrop-filter:blur(12px) saturate(190%)}
+.plan{backdrop-filter:blur(12px) saturate(190%);-webkit-backdrop-filter:blur(12px) saturate(190%)}
+.mini,.tier,.bdg,.togo{border:0;background:rgba(255,255,255,.09);backdrop-filter:blur(10px) saturate(190%);-webkit-backdrop-filter:blur(10px) saturate(190%)}
+/* nav: draggable glass lens */
+.nav{border:0;background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.04));touch-action:none;user-select:none;-webkit-user-select:none;
+  backdrop-filter:blur(10px) saturate(210%) brightness(1.1);-webkit-backdrop-filter:blur(10px) saturate(210%) brightness(1.1)}
+.nav .blob{background:linear-gradient(160deg,rgba(255,255,255,.34),rgba(255,255,255,.1) 55%,rgba(255,236,190,.2));
+  box-shadow:inset 1.2px 1.2px 0 rgba(255,255,255,.8),inset -1px -1px 0 rgba(255,255,255,.35),inset 0 0 14px rgba(255,255,255,.18),0 6px 18px rgba(0,0,0,.35);
+  transition:left .45s cubic-bezier(.3,1.35,.5,1),width .45s,scale .35s cubic-bezier(.3,1.6,.5,1),background .3s}
+.nav.press .blob{scale:1.1 1.28;background:linear-gradient(160deg,rgba(255,255,255,.3),rgba(255,255,255,.06));box-shadow:inset 1.4px 1.4px 0 #fff,inset -1px -1px 0 rgba(255,255,255,.5),inset 0 0 18px rgba(255,255,255,.25),0 10px 26px rgba(0,0,0,.4)}
+.nav.press.drag .blob{transition:scale .35s cubic-bezier(.3,1.6,.5,1),background .3s}
+.nav{transition:scale .35s cubic-bezier(.3,1.6,.5,1)}
+.nav.press{scale:1.045}
+.nv.on{color:#fff;text-shadow:0 0 12px rgba(255,236,180,.55)}
+.nv.on svg{color:var(--gold)}
+/* sheets */
+.sheet{background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.03) 30%),rgba(18,18,22,.58);border-top:0;
+  backdrop-filter:blur(34px) saturate(190%);-webkit-backdrop-filter:blur(34px) saturate(190%);
+  box-shadow:inset 0 1.4px 0 rgba(255,255,255,.55),inset 0 14px 28px -18px rgba(255,255,255,.35),0 -20px 60px -20px rgba(0,0,0,.7)}
+#toast{border:0;background:rgba(40,42,56,.5);backdrop-filter:blur(14px) saturate(200%);-webkit-backdrop-filter:blur(14px) saturate(200%)}
+/* extra colour behind glass so it has something to refract */
+.orb.o4{width:120px;height:120px;background:#ff5fa8;top:180px;left:30px;opacity:.3;animation-delay:-2s}
+.orb.o5{width:110px;height:110px;background:#8a5cff;top:470px;right:60px;opacity:.32;animation-delay:-6s}
 </style>
 </head>
 <body>
-<canvas id="bg"></canvas><div class="glow a"></div><div class="glow b"></div>
+<canvas id="bg"></canvas><div class="orbs" id="orbs"><i class="orb o1"></i><i class="orb o2"></i><i class="orb o3"></i><i class="orb o4"></i><i class="orb o5"></i></div><div class="glow a"></div><div class="glow b"></div>
 <div id="splash">
   <div class="stage">
     <div class="backglow"></div><div class="beam"></div><div class="floor"></div><div class="pool"></div>
@@ -218,6 +344,17 @@ header p{margin:2px 0 0;color:var(--mut);font-size:12.5px}
 <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2-2h12v4"/><rect x="3" y="7" width="18" height="13" rx="3"/><circle cx="16.5" cy="13.5" r="1.2"/></symbol>
 <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M16 4.7a3.5 3.5 0 0 1 0 6.6M18.5 14.8c1.7.7 2.8 2.4 3.3 5"/></symbol>
 <symbol id="i-box" viewBox="0 0 24 24"><path d="M3.5 7.5 12 3l8.5 4.5v9L12 21l-8.5-4.5z"/><path d="m3.5 7.5 8.5 4.5 8.5-4.5M12 12v9"/></symbol>
+<symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4.5"/><path d="m11.5 12 8-8M16 7l2.5 2.5M13.5 9.5 16 12"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+<symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="12" rx="2"/><path d="M3 13h18M12 9v12M12 9c-2.5 0-4.5-1-4.5-3S10 3 12 6c2-3 4.5-2 4.5 0S14.5 9 12 9z"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+<symbol id="i-dice" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><circle cx="8.5" cy="8.5" r="1"/><circle cx="15.5" cy="15.5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="15.5" cy="8.5" r="1"/><circle cx="8.5" cy="15.5" r="1"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="3"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+<symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.5-5.8M20 4v5h-5"/></symbol>
+<symbol id="i-card" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="3"/><path d="M2.5 10h19M6.5 15h4"/></symbol>
+<symbol id="i-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M14.5 9.2c-.6-.8-1.5-1.2-2.5-1.2-1.4 0-2.500.8-2.500 2s1 1.6 2.500 2 2.500.8 2.500 2-1.1 2-2.500 2c-1 0-1.900-.4-2.500-1.200M12 6.500v1.500M12 16v1.500"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></symbol>
+<symbol id="i-share" viewBox="0 0 24 24"><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="m8.2 10.8 7.6-3.6M8.2 13.2l7.6 3.6"/></symbol>
 <symbol id="i-user1" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c.9-3.6 3.6-5.4 7-5.4s6.1 1.8 7 5.4z"/></symbol>
 </defs></svg>
 <template id="tIcon"><svg class="i"><use/></svg></template>
@@ -238,14 +375,19 @@ header p{margin:2px 0 0;color:var(--mut);font-size:12.5px}
     <div class="perk"><svg class="i"><use href="#i-shield"/></svg>اتصال امن</div>
     <div class="perk"><svg class="i"><use href="#i-chat"/></svg>پشتیبانی</div>
   </div>
+  <div class="ban" id="renBan"><span>تمدید <b id="renName"></b> — یه پلن انتخاب کن</span><button class="x" id="renX">×</button></div>
   <div class="tabs" id="tabs"><div class="ind" id="ind"></div></div>
   <div class="list" id="list"></div>
 </div>
 
+<div id="pgAcc" class="page">
+  <div class="ph-t"><h2>اکانت‌های من</h2><button class="mini" id="accRef"><svg class="i"><use href="#i-refresh"/></svg>به‌روزرسانی</button></div>
+  <div id="accList"></div>
+</div>
+
 <div id="pgProf" class="page">
-  <div class="orbs"><i class="orb o1"></i><i class="orb o2"></i><i class="orb o3"></i></div>
   <div class="lg pf-head"><div class="av" id="pAv">?</div><div><h3 id="pName"></h3><p id="pSub"></p></div><div class="tier" id="pTier"></div></div>
-  <div class="lg bal"><small><svg class="i"><use href="#i-wallet"/></svg>موجودی کیف پول</small><b id="pBal">۰</b><span>تومان</span></div>
+  <div class="lg bal"><small><svg class="i"><use href="#i-wallet"/></svg>موجودی کیف پول</small><b id="pBal">۰</b><span>تومان</span><br><button class="mini apionly" id="bTop" style="margin-top:14px;display:none">+ شارژ کیف پول</button></div>
   <div class="stats">
     <div class="lg stat"><svg class="i"><use href="#i-box"/></svg><b id="pAct">۰</b><small>سرویس فعال</small></div>
     <div class="lg stat"><svg class="i"><use href="#i-users"/></svg><b id="pRef">۰</b><small>دعوت</small></div>
@@ -253,11 +395,18 @@ header p{margin:2px 0 0;color:var(--mut);font-size:12.5px}
   </div>
   <div class="lg tcard"><div class="tr"><span>مجموع خرید</span><b id="pSp"></b></div><div class="bar"><i id="pBar"></i></div><p id="pNext"></p></div>
   <div class="badges" id="pBadges"></div>
+  <div class="menu apionly" id="pMenu" style="display:none">
+    <button class="lg mi" data-m="hist"><svg class="i"><use href="#i-clock"/></svg>تاریخچه‌ی سفارش و شارژ<small>›</small></button>
+    <button class="lg mi" data-m="ref"><svg class="i"><use href="#i-gift"/></svg>دعوت دوستان و جایزه<small id="refSm"></small></button>
+    <button class="lg mi" data-m="spin"><svg class="i"><use href="#i-dice"/></svg>چرخ‌گردون شانس<small id="spinSm"></small></button>
+    <button class="lg mi" data-m="admin" id="miAdmin" style="display:none"><svg class="i"><use href="#i-chart"/></svg>داشبورد ادمین<small>›</small></button>
+  </div>
   <button class="togo" id="toBot">بازگشت به ربات</button>
 </div>
 
 <div class="nav" id="nav"><div class="blob" id="blob"></div>
   <button class="nv on" data-p="shop"><svg class="i"><use href="#i-store"/></svg>فروشگاه</button>
+  <button class="nv" data-p="acc" id="nvAcc" style="display:none"><svg class="i"><use href="#i-key"/></svg>اکانت‌ها</button>
   <button class="nv" data-p="prof"><svg class="i"><use href="#i-user"/></svg>پروفایل</button>
 </div>
 
@@ -272,6 +421,9 @@ header p{margin:2px 0 0;color:var(--mut);font-size:12.5px}
   <button class="go" id="go">ادامه و پرداخت</button>
   <div class="note">پرداخت امن، داخل خود ربات</div>
 </div>
+<div class="ov" id="gov" style="z-index:40"></div>
+<div class="sheet" id="gsheet" style="z-index:41"><div class="grab" id="ggrab"></div><div class="gh"><h2 id="gT"></h2><button class="x" id="gX">×</button></div><div id="gB"></div></div>
+<div id="toast"></div>
 <canvas id="fx"></canvas>
 
 <script>
@@ -391,6 +543,7 @@ function confetti(){
     if(++f<60)requestAnimationFrame(a);else x.clearRect(0,0,c.width,c.height)})();
 }
 $('go').onclick=()=>{
+  if(API){checkout();return}
   hap('heavy');confetti();
   const on=D.on!==0,m=(on&&!isLocked(cur))?sel.m:1,u=on?sel.u:1;
   const link=`https://t.me/${D.b}?start=mp_${cur[0]}_${m}_${u}`;
@@ -400,14 +553,16 @@ if(tg&&tg.BackButton)tg.BackButton.onClick(closeSheet);
 
 // ===== navigation =====
 let page='shop';
+const PG={shop:'pgShop',acc:'pgAcc',prof:'pgProf'};
+function placeBlob(){const b=document.querySelector('.nv.on');if(!b)return;const bl=$('blob');bl.style.transition='left .45s cubic-bezier(.3,1.35,.5,1),width .45s';bl.style.width=b.offsetWidth+'px';bl.style.left=b.offsetLeft+'px';bl.style.transform='none'}
 function go(p){
   if(p===page)return;page=p;sel_h();
-  $('pgShop').classList.toggle('on',p==='shop');$('pgProf').classList.toggle('on',p==='prof');
-  document.body.classList.toggle('prof',p==='prof');
+  Object.keys(PG).forEach(k=>$(PG[k]).classList.toggle('on',k===p));
+  document.body.classList.toggle('prof',p!=='shop');
   document.querySelectorAll('.nv').forEach(b=>b.classList.toggle('on',b.dataset.p===p));
-  $('blob').style.transform=`translateX(${p==='prof'?-100:0}%)`;
-  scrollTo(0,0);
+  placeBlob();scrollTo(0,0);
   if(p==='prof')fillProfile();
+  if(p==='acc')loadAccs();
 }
 $('nav').onclick=e=>{const b=e.target.closest('.nv');if(b)go(b.dataset.p)};
 $('toBot').onclick=()=>{hap();if(tg)tg.close()};
@@ -567,6 +722,232 @@ async function loadLandMask(){
   at(4900,finish);
 })();
 
+
+// ===================== API mode =====================
+let API=false,renewT=null;
+const MB=1073741824;
+function toast(m,err){const t=$('toast');t.textContent=m;t.className='on'+(err?' err':'');clearTimeout(toast.t);toast.t=setTimeout(()=>t.className='',2800)}
+async function api(path,body){
+  try{
+    const r=await fetch('api/'+path,{method:body?'POST':'GET',headers:{'X-Init-Data':tg?tg.initData:'','Content-Type':'application/json'},body:body?JSON.stringify(body):undefined});
+    return await r.json();
+  }catch(e){return{ok:false,error:'خطای شبکه'}}
+}
+function copyTxt(t,msg){
+  const done=()=>toast(msg||'کپی شد ✓');
+  try{navigator.clipboard.writeText(t).then(done,()=>fb())}catch(e){fb()}
+  function fb(){const a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.opacity=0;document.body.appendChild(a);a.select();try{document.execCommand('copy');done()}catch(e){toast('کپی نشد',true)}a.remove()}
+}
+const openLink=u=>{if(tg)tg.openTelegramLink(u);else window.open(u)};
+let gTimer=null;
+function openG(title,html,mount){
+  clearInterval(gTimer);
+  $('gT').textContent=title;$('gB').innerHTML=html;
+  $('gov').classList.add('on');$('gsheet').classList.add('on');
+  if(mount)mount($('gB'));
+}
+function closeG(){clearInterval(gTimer);$('gov').classList.remove('on');$('gsheet').classList.remove('on');$('gsheet').style.transform=''}
+$('gov').onclick=closeG;$('gX').onclick=closeG;
+(()=>{let y0=null,dy=0;const g=$('ggrab'),s=$('gsheet');
+ g.addEventListener('touchstart',e=>{y0=e.touches[0].clientY;s.classList.add('drag')},{passive:true});
+ g.addEventListener('touchmove',e=>{if(y0===null)return;dy=Math.max(0,e.touches[0].clientY-y0);s.style.transform=`translateY(${dy}px)`},{passive:true});
+ g.addEventListener('touchend',()=>{s.classList.remove('drag');if(dy>110)closeG();else s.style.transform='';y0=null;dy=0});})();
+
+async function refreshMe(){const b=await api('bootstrap');if(b&&b.ok){Object.assign(D,b);if(page==='prof')fillProfile();apiInit()}}
+
+function apiInit(){
+  document.querySelectorAll('.apionly').forEach(e=>e.style.display=e.classList.contains('mini')?'inline-flex':'flex');
+  $('nvAcc').style.display='flex';
+  if(D.admin)$('miAdmin').style.display='flex';
+  if(D.ref)$('refSm').textContent=`${toFa(D.ref.count)} / ${toFa(D.ref.need)}`;
+  if(D.spin)$('spinSm').textContent=D.spin.can?'امروز آماده‌ست 🎁':'فردا دوباره';
+  requestAnimationFrame(placeBlob);
+}
+
+// ---------- accounts ----------
+const ST={active:['فعال','active'],limited:['حجم تموم شده','bad'],expired:['منقضی','bad'],disabled:['غیرفعال','bad'],on_hold:['در انتظار','warn']};
+function accCard(a){
+  const used=a.used/MB,lim=a.lim/MB,pct=lim?Math.min(100,used/lim*100):0,cls=pct>=90?'hi':pct>=70?'mid':'ok';
+  const days=a.exp?Math.ceil((a.exp*1000-Date.now())/864e5):null;
+  const st=ST[a.st]||['نامشخص','warn'];
+  const left=lim?Math.max(lim-used,0):0;
+  return `<div class="lg acc" data-u="${esc(a.u)}">
+    <div class="top"><div class="nm">${esc(a.u)}</div><span class="st ${st[1]}">${st[0]}</span></div>
+    <div class="meter ${cls}"><i data-w="${lim?pct:100}"></i></div>
+    <div class="mrow"><span>${lim?`<b>${toFa(used.toFixed(2))}</b> از ${toFa(lim.toFixed(0))} گیگ`:`<b>${toFa(used.toFixed(2))}</b> گیگ مصرف • ♾`}</span><span>${lim?`<b>${toFa(left.toFixed(2))}</b> گیگ مونده`:''}</span></div>
+    <div class="mrow" style="margin-top:6px"><span>انقضا</span><span><b>${days===null?'بدون انقضا':(days<0?'منقضی شده':toFa(days)+' روز مونده')}</b></span></div>
+    <div class="acts"><button class="mini" data-a="copy">${ico('copy')}لینک</button><button class="mini" data-a="qr">QR</button><button class="mini gold" data-a="ren">${ico('refresh')}تمدید</button></div>
+  </div>`;
+}
+let ACCS=[];
+async function loadAccs(){
+  const L=$('accList');L.innerHTML='<div class="emp">در حال دریافت…</div>';
+  const r=await api('accounts');
+  if(!r.ok){L.innerHTML=`<div class="emp">${esc(r.error||'خطا')}</div>`;return}
+  ACCS=r.items;
+  if(!ACCS.length){L.innerHTML='<div class="emp"><b>📭</b>هنوز اشتراکی نداری<br><br><button class="mini gold" id="toShop" style="margin:auto">خرید اولین اشتراک</button></div>';$('toShop').onclick=()=>go('shop');return}
+  L.innerHTML=ACCS.map(accCard).join('');
+  setTimeout(()=>L.querySelectorAll('.meter i').forEach(i=>i.style.width=i.dataset.w+'%'),80);
+}
+$('accRef').onclick=()=>{hap();loadAccs()};
+$('accList').onclick=async e=>{
+  const b=e.target.closest('[data-a]');if(!b)return;
+  const name=b.closest('.acc').dataset.u,acc=ACCS.find(x=>x.u===name);if(!acc)return;hap();
+  if(b.dataset.a==='copy'){if(acc.sub)copyTxt(acc.sub,'لینک اشتراک کپی شد ✓');else toast('لینکی ثبت نشده',true)}
+  else if(b.dataset.a==='qr')showQR(name,acc.sub);
+  else if(b.dataset.a==='ren'){renewT=name;$('renName').textContent=name;$('renBan').classList.add('on');go('shop')}
+};
+$('renX').onclick=()=>{renewT=null;$('renBan').classList.remove('on')};
+async function showQR(name,sub){
+  openG('QR اشتراک',`<div class="qrbox"><img id="qrimg" alt=""></div><button class="go" id="qrc">کپی لینک اشتراک</button>`,()=>{
+    $('qrc').onclick=()=>copyTxt(sub,'لینک اشتراک کپی شد ✓');
+    fetch('api/qr?u='+encodeURIComponent(name),{headers:{'X-Init-Data':tg?tg.initData:''}}).then(r=>r.blob()).then(b=>{$('qrimg').src=URL.createObjectURL(b)}).catch(()=>toast('QR نیومد',true));
+  });
+}
+
+// ---------- checkout ----------
+async function checkout(){
+  const on=D.on!==0,m=(on&&!isLocked(cur))?sel.m:1,u=on?sel.u:1;
+  $('go').disabled=true;
+  const r=await api('order',{plan_id:cur[0],mult:m,users:u,renew:renewT});
+  $('go').disabled=false;
+  if(!r.ok){toast(r.error||'خطا',true);return}
+  closeSheet();showPay(r);
+}
+function showPay(o){
+  const bal=o.balance,enough=bal>=o.price;
+  openG(renewT?'پرداخت تمدید':'پرداخت',`
+   <div class="recp" style="margin-top:0"><div class="tt" style="margin:0;padding:0;border:0"><span>مبلغ سفارش</span><b>${fmt(o.price)}</b></div></div>
+   <button class="pm" data-pm="wallet">${ico('wallet')}<span>کیف پول<small>موجودی: ${fmt(bal)}${enough?'':' — کمبود '+fmt(o.price-bal)}</small></span><span class="l">${enough?'پرداخت':'شارژ'}</span></button>
+   ${D.crypto?`<button class="pm" data-pm="crypto">${ico('coin')}<span>ارز دیجیتال (USDT)<small>تایید خودکار</small></span></button>`:''}
+   <button class="pm" data-pm="card">${ico('card')}<span>کارت به کارت<small>ادامه داخل ربات</small></span></button>
+   ${o.stars?`<button class="pm" data-pm="stars">${ico('star')}<span>استارز تلگرام<small>${toFa(o.stars)} ستاره</small></span></button>`:''}`,
+  box=>{box.onclick=async e=>{
+    const b=e.target.closest('[data-pm]');if(!b)return;hap();const k=b.dataset.pm;
+    if(k==='wallet'){
+      if(!enough){const need=Math.max(D.topup.min,Math.ceil((o.price-bal)/10000)*10000);return showTopup(need)}
+      b.classList.add('dis');
+      const r=await api('pay/wallet',{order_id:o.order_id});
+      if(!r.ok){b.classList.remove('dis');return toast(r.error||'خطا',true)}
+      return showDone(r.username,r.sub,!!renewT_done());
+    }
+    if(k==='crypto'){const r=await api('pay/crypto',{order_id:o.order_id});if(!r.ok)return toast(r.error||'خطا',true);return showCrypto(r,'order')}
+    openLink(`https://t.me/${D.b}?start=pay_${o.order_id}`);setTimeout(()=>tg&&tg.close(),250);
+  }});
+}
+function renewT_done(){const v=renewT;renewT=null;$('renBan').classList.remove('on');return v}
+function showDone(username,sub,renew){
+  hap('heavy');confetti();refreshMe();
+  openG(renew?'تمدید شد':'اشتراک آماده‌ست',`<div class="big-ok"><div class="ck">✓</div><h3>${renew?'تمدید انجام شد':'پرداخت موفق بود'}</h3><p>کانفیگ داخل ربات هم برات ارسال شد.</p></div>
+   ${username?`<div class="kv"><span>نام اکانت</span><b>${esc(username)}</b></div>`:''}
+   ${sub?`<button class="go" id="dcp">کپی لینک اشتراک</button>`:''}
+   <button class="pm" id="dacc" style="justify-content:center;margin-top:12px">رفتن به اکانت‌های من</button>`,
+  ()=>{if(sub)$('dcp').onclick=()=>copyTxt(sub,'لینک اشتراک کپی شد ✓');$('dacc').onclick=()=>{closeG();go('acc')}});
+}
+function showCrypto(c,kind){
+  openG('پرداخت USDT',`<div class="kv"><span>مبلغ معادل</span><b>${fmt(c.amount)}</b></div>
+   <div class="kv"><span>مقدار دقیق (TRC20)</span><b>${c.usdt} USDT</b></div>
+   <div class="addr">${c.wallet}</div>
+   <div class="acts"><button class="mini" id="ca">${ico('copy')}کپی آدرس</button><button class="mini" id="cm">${ico('copy')}کپی مقدار</button></div>
+   <p class="note" id="ctm" style="margin-top:14px"></p>
+   <p class="note">دقیقاً همین مقدار (با همه‌ی اعشار) و فقط روی شبکه‌ی TRC20 بفرست؛ بعد از ارسال خودکار تایید می‌شه.</p>`,
+  ()=>{
+    $('ca').onclick=()=>copyTxt(c.wallet,'آدرس کپی شد ✓');$('cm').onclick=()=>copyTxt(c.usdt,'مقدار کپی شد ✓');
+    const tick=()=>{const s=Math.max(0,c.expires-Math.floor(Date.now()/1000));$('ctm').textContent=s?`⏱ ${toFa(Math.floor(s/60))}:${toFa(String(s%60).padStart(2,'0'))} تا پایان مهلت — در حال انتظار برای پرداخت…`:'مهلت تموم شد'};
+    tick();
+    gTimer=setInterval(async()=>{tick();const r=await api('crypto/status?id='+c.id);
+      if(r.ok&&r.status==='paid'){clearInterval(gTimer);if(kind==='order'){showDone('','',!!renewT_done())}else{hap('heavy');confetti();refreshMe();openG('شارژ شد',`<div class="big-ok"><div class="ck">✓</div><h3>کیف پول شارژ شد</h3><p>موجودی: ${fmt(r.balance)}</p></div>`)}}},5000);
+  });
+}
+
+// ---------- topup ----------
+function showTopup(pre){
+  const T=D.topup||{min:20000,max:10000000};let amt=pre||100000;
+  const amts=[50000,100000,200000,500000,1000000,2000000];
+  openG('شارژ کیف پول',`<div class="amts" id="tam">${amts.map(a=>`<button class="opt ${a===amt?'on':''}" data-a="${a}">${toFa(a/1000)}<small>هزار ت</small></button>`).join('')}</div>
+   <input class="inp" id="tin" inputmode="numeric" placeholder="یا مبلغ دلخواه (تومان)" value="${amts.includes(amt)?'':amt}">
+   ${D.crypto?`<button class="pm" data-t="crypto">${ico('coin')}<span>ارز دیجیتال (USDT)<small>تایید خودکار</small></span></button>`:''}
+   <button class="pm" data-t="card">${ico('card')}<span>کارت به کارت<small>ارسال رسید داخل ربات</small></span></button>`,
+  box=>{
+    const val=()=>{const v=parseInt(String($('tin').value).replace(/[^\d۰-۹]/g,'').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)))||amt;return v};
+    $('tam').onclick=e=>{const b=e.target.closest('.opt');if(!b)return;amt=+b.dataset.a;$('tin').value='';$('tam').querySelectorAll('.opt').forEach(x=>x.classList.toggle('on',x===b));hap()};
+    $('tin').oninput=()=>{$('tam').querySelectorAll('.opt').forEach(x=>x.classList.remove('on'))};
+    box.onclick=async e=>{const b=e.target.closest('[data-t]');if(!b)return;const v=val();hap();
+      if(v<T.min||v>T.max)return toast(`مبلغ باید بین ${fmt(T.min)} تا ${fmt(T.max)} باشه`,true);
+      if(b.dataset.t==='crypto'){const r=await api('topup/crypto',{amount:v});if(!r.ok)return toast(r.error||'خطا',true);showCrypto(r,'topup')}
+      else{openLink(`https://t.me/${D.b}?start=tp_${v}`);setTimeout(()=>tg&&tg.close(),250)}};
+  });
+}
+$('bTop').onclick=()=>{hap();showTopup()};
+
+// ---------- profile menu ----------
+$('pMenu').onclick=e=>{const b=e.target.closest('[data-m]');if(!b)return;hap();({hist:showHist,ref:showRef,spin:showSpin,admin:showAdmin})[b.dataset.m]()};
+const SB={paid:'پرداخت‌شده',delivered:'تحویل شد',pending:'در انتظار',rejected:'رد شد',approved:'تایید شد'};
+async function showHist(){
+  openG('تاریخچه','<div class="emp">در حال دریافت…</div>');
+  const r=await api('history');if(!r.ok)return $('gB').innerHTML=`<div class="emp">${esc(r.error||'خطا')}</div>`;
+  const draw=tab=>{
+    const rows=tab==='o'?r.orders.map(o=>`<div class="hrow"><div class="mid"><b>${o.r?'🔄 ':''}${esc(o.n)}</b><span class="dt">#${toFa(o.id)} • ${toFa(o.t)}</span></div><div style="text-align:left"><div class="pr">${o.g?'رایگان':fmt(o.p)}</div><span class="sb ${o.s}">${SB[o.s]||o.s}</span></div></div>`)
+      :r.topups.map(o=>`<div class="hrow"><div class="mid"><b>شارژ کیف پول</b><span class="dt">#${toFa(o.id)} • ${toFa(o.t)}</span></div><div style="text-align:left"><div class="pr">${fmt(o.a)}</div><span class="sb ${o.s}">${SB[o.s]||o.s}</span></div></div>`);
+    $('hl').innerHTML=rows.length?rows.join(''):'<div class="emp">موردی نیست</div>';
+  };
+  $('gB').innerHTML='<div class="seg2"><button class="opt on" data-t="o">سفارش‌ها</button><button class="opt" data-t="t">شارژها</button></div><div id="hl"></div>';
+  $('gB').firstChild.onclick=e=>{const b=e.target.closest('.opt');if(!b)return;hap();$('gB').firstChild.querySelectorAll('.opt').forEach(x=>x.classList.toggle('on',x===b));draw(b.dataset.t)};
+  draw('o');
+}
+function showRef(){
+  const R=D.ref,pct=Math.min(100,(R.count%R.need||(R.count?R.need:0))/R.need*100);
+  openG('دعوت دوستان',`<p class="note" style="text-align:right;margin:0 0 12px;font-size:13px;line-height:1.9">هر ${toFa(R.need)} نفر که با لینک تو عضو بشن، یه جایزه‌ی ${toFa(R.gb)} گیگی (${toFa(R.days)} روزه) خودکار برات فعال می‌شه 🎁</p>
+   <div class="mrow"><span>دعوت‌های موفق</span><b>${toFa(R.count)} نفر</b></div><div class="prog"><i style="width:${pct}%"></i></div>
+   <div class="addr">${R.link}</div>
+   <div class="acts"><button class="mini" id="rc">${ico('copy')}کپی لینک</button><button class="mini gold" id="rs">${ico('share')}ارسال به دوستان</button></div>`,
+  ()=>{$('rc').onclick=()=>copyTxt(R.link,'لینک دعوت کپی شد ✓');
+    $('rs').onclick=()=>openLink(`https://t.me/share/url?url=${encodeURIComponent(R.link)}&text=${encodeURIComponent('با این لینک VPN پرسرعت بگیر 🚀')}`)});
+}
+function showSpin(){
+  const P=D.spin.prizes,cols=['#f6dc94','#46e0c0','#e9c978','#7fb2ff','#f0a96b','#b98cff'];
+  const pt=(a,r)=>[120+r*Math.sin(a*Math.PI/180),120-r*Math.cos(a*Math.PI/180)];
+  const sl=P.map((p,i)=>{const a0=i*60,a1=a0+60,[x0,y0]=pt(a0,118),[x1,y1]=pt(a1,118),[tx,ty]=pt(a0+30,78);
+    const lab=p>0?toFa(p/1000)+'K':'پوچ';
+    return `<path d="M120 120L${x0} ${y0}A118 118 0 0 1 ${x1} ${y1}Z" fill="${cols[i]}" stroke="#1b1304" stroke-width="2"/><text x="${tx}" y="${ty}" text-anchor="middle" dominant-baseline="middle" transform="rotate(${a0+30} ${tx} ${ty})">${lab}</text>`}).join('');
+  openG('چرخ‌گردون شانس',`<div class="wheelw"><svg class="ptr" viewBox="0 0 28 36"><path d="M14 36 2 6a14 14 0 0 1 24 0z" fill="#fbe9b4" stroke="#1b1304" stroke-width="2"/></svg><svg class="wheel" id="wh" viewBox="0 0 240 240">${sl}</svg><div class="hub">🎲</div></div>
+   <p class="note" id="sp" style="font-size:13px;margin:0 0 12px">${D.spin.can?'روزی یه‌بار شانستو امتحان کن؛ جایزه مستقیم میره توی کیف پولت':'امروز چرخوندی؛ فردا دوباره بیا 😉'}</p>
+   <button class="go" id="sgo" ${D.spin.can?'':'disabled style="opacity:.5"'}>بچرخون!</button>`,
+  ()=>{$('sgo').onclick=async()=>{
+    $('sgo').disabled=true;hap('medium');
+    const r=await api('spin',{});
+    if(!r.ok){toast(r.error||'خطا',true);return}
+    const ang=360*6-(r.value-.5)*60;$('wh').style.transform=`rotate(${ang}deg)`;
+    let n=0;const tk=setInterval(()=>{hap('light');if(++n>16)clearInterval(tk)},260);
+    setTimeout(()=>{D.spin.can=false;apiInit();hap('heavy');
+      if(r.amount>0){confetti();$('sp').innerHTML=`🎉 <b style="color:var(--gold)">${fmt(r.amount)}</b> به کیف پولت اضافه شد`;D.u.bal=r.balance}else $('sp').textContent='این‌بار پوچ شد 😅 فردا دوباره امتحان کن';
+    },4800);
+  }});
+}
+async function showAdmin(){
+  openG('داشبورد ادمین','<div class="emp">در حال دریافت…</div>');
+  const r=await api('admin/stats');if(!r.ok)return $('gB').innerHTML=`<div class="emp">${esc(r.error||'خطا')}</div>`;
+  const bars=(arr,col)=>{const mx=Math.max(...arr,1),w=300/arr.length;return `<svg viewBox="0 0 300 110" preserveAspectRatio="none">${arr.map((v,i)=>{const hh=Math.max(2,v/mx*96);return `<rect x="${i*w+3}" y="${106-hh}" width="${w-6}" height="${hh}" rx="3" fill="${col}" opacity="${.45+.55*(i+1)/arr.length}"/>`}).join('')}</svg>`};
+  $('gB').innerHTML=`<div class="kpis">
+    <div class="kpi g"><small>فروش امروز</small><b>${fmt(r.rev.today)}</b></div><div class="kpi g"><small>۷ روز اخیر</small><b>${fmt(r.rev.d7)}</b></div>
+    <div class="kpi"><small>۳۰ روز اخیر</small><b>${fmt(r.rev.d30)}</b></div><div class="kpi"><small>کل فروش</small><b>${fmt(r.rev.all)}</b></div>
+    <div class="kpi"><small>سفارش امروز / ۷ روز</small><b>${toFa(r.orders.today)} / ${toFa(r.orders.d7)}</b></div><div class="kpi"><small>رسید در انتظار</small><b>${toFa(r.orders.pending)} + ${toFa(r.orders.pending_topups)} شارژ</b></div>
+    <div class="kpi"><small>کاربران (جدید امروز)</small><b>${toFa(r.users.total)} (+${toFa(r.users.today)})</b></div><div class="kpi"><small>اکانت‌ها / کیف‌پول‌ها</small><b>${toFa(r.users.accounts)} / ${toFa(Math.round(r.users.wallets/1000))}K</b></div></div>
+   <div class="chart"><h4>فروش ۱۴ روز اخیر</h4>${bars(r.series.rev,'#e9c978')}</div>
+   <div class="chart"><h4>کاربران جدید ۱۴ روز اخیر</h4>${bars(r.series.users,'#46e0c0')}</div>
+   <div class="chart"><h4>پرفروش‌ترین پلن‌ها (۳۰ روز)</h4>${r.top.length?r.top.map(t=>`<div class="hrow"><div class="mid"><b>${esc(t.n)}</b></div><div class="pr">${toFa(t.c)} فروش • ${fmt(t.r)}</div></div>`).join(''):'<div class="emp" style="padding:14px">هنوز فروشی نیست</div>'}</div>`;
+}
+
+async function boot(){
+  let d=null;
+  if(tg&&tg.initData){
+    const p=await Promise.race([api('ping'),new Promise(r=>setTimeout(()=>r(null),2500))]);
+    if(p&&p.ok){const b=await api('bootstrap');if(b&&b.ok){API=true;d=b}}
+  }
+  if(!d)d=await decode();
+  D=d||DEMO;init();
+}
+
 // ===== init =====
 function init(){
   cats=[...new Set(D.p.map(p=>p[5]))];cat=cats[0];
@@ -575,10 +956,86 @@ function init(){
   const tu=tg&&tg.initDataUnsafe&&tg.initDataUnsafe.user;
   if(tu&&tu.first_name)$('hello').textContent='سلام '+tu.first_name;
   if(!D.u)$('nav').querySelector('[data-p="prof"]').style.display='none';
-  $('blob').style.width=D.u?'calc(50% - 7px)':'calc(100% - 14px)';
+  if(API)apiInit();
+  requestAnimationFrame(placeBlob);addEventListener('resize',placeBlob);
   renderTabs();renderList();
 }
-decode().then(d=>{D=d||DEMO;init()});
+boot();
+
+// ===== Liquid glass v2: real refraction (Chromium) + draggable nav =====
+(()=>{
+  const ua=navigator.userAgent;
+  const canRefract=/Chrome\/|CriOS/.test(ua)&&!/iPhone|iPad|iPod/.test(ua);
+  const NS='http://www.w3.org/2000/svg';
+  let defs=null,seq=0;
+  function ensureDefs(){if(defs)return defs;const s=document.createElementNS(NS,'svg');s.setAttribute('width','0');s.setAttribute('height','0');s.style.cssText='position:absolute;pointer-events:none';defs=document.createElementNS(NS,'defs');s.appendChild(defs);document.body.appendChild(s);return defs}
+  function mapURL(w,h,r,band){
+    const k=.5,cw=Math.max(8,Math.round(w*k)),ch=Math.max(8,Math.round(h*k));
+    const c=document.createElement('canvas');c.width=cw;c.height=ch;const x=c.getContext('2d'),im=x.createImageData(cw,ch),d=im.data;
+    r=Math.min(r,w/2,h/2);
+    for(let j=0;j<ch;j++)for(let i=0;i<cw;i++){
+      const px=(i+.5)/k-w/2,py=(j+.5)/k-h/2;
+      const qx=Math.abs(px)-(w/2-r),qy=Math.abs(py)-(h/2-r);
+      const ox=Math.max(qx,0),oy=Math.max(qy,0),out=Math.hypot(ox,oy);
+      const dist=-(out+Math.min(Math.max(qx,qy),0)-r);   // distance inside from edge
+      let dx=0,dy=0;
+      if(dist<band){
+        const m=Math.pow(Math.max(0,1-dist/band),2.2);
+        let nx,ny;
+        if(qx>0&&qy>0){const l=out||1;nx=Math.sign(px)*ox/l;ny=Math.sign(py)*oy/l}
+        else if(qx>qy){nx=Math.sign(px);ny=0}else{nx=0;ny=Math.sign(py)}
+        dx=nx*m;dy=ny*m;
+      }
+      const o=(j*cw+i)*4;d[o]=128+dx*127;d[o+1]=128+dy*127;d[o+2]=128;d[o+3]=255;
+    }
+    x.putImageData(im,0,0);return c.toDataURL();
+  }
+  function refract(el){
+    const w=el.offsetWidth,h=el.offsetHeight;if(!w||!h)return;
+    const cs=getComputedStyle(el);let r=parseFloat(cs.borderTopLeftRadius)||20;
+    const id=el._lgid||(el._lgid='lgf'+(++seq));
+    let f=document.getElementById(id);
+    if(!f){f=document.createElementNS(NS,'filter');f.id=id;f.setAttribute('color-interpolation-filters','sRGB');f.setAttribute('x','0');f.setAttribute('y','0');f.setAttribute('width','100%');f.setAttribute('height','100%');ensureDefs().appendChild(f)}
+    const band=Math.min(26,Math.min(w,h)*.42),scale=Math.min(34,band*1.3);
+    f.innerHTML='';
+    const im=document.createElementNS(NS,'feImage');im.setAttribute('href',mapURL(w,h,r,band));im.setAttribute('x','0');im.setAttribute('y','0');im.setAttribute('width',w);im.setAttribute('height',h);im.setAttribute('preserveAspectRatio','none');im.setAttribute('result','m');
+    const dm=document.createElementNS(NS,'feDisplacementMap');dm.setAttribute('in','SourceGraphic');dm.setAttribute('in2','m');dm.setAttribute('scale',scale);dm.setAttribute('xChannelSelector','R');dm.setAttribute('yChannelSelector','G');
+    f.appendChild(im);f.appendChild(dm);
+    const bl=el.classList.contains('nav')?10:12;
+    el.style.backdropFilter=`blur(${bl*.5}px) url(#${id}) saturate(200%) brightness(1.08)`;
+  }
+  if(canRefract){
+    const ro=new ResizeObserver(es=>es.forEach(e=>{clearTimeout(e.target._lgt);e.target._lgt=setTimeout(()=>refract(e.target),60)}));
+    const attach=()=>document.querySelectorAll('.lg,.nav').forEach(el=>{if(!el._lgro){el._lgro=1;ro.observe(el)}});
+    attach();let q=0;new MutationObserver(()=>{if(q)return;q=requestAnimationFrame(()=>{q=0;attach()})}).observe(document.body,{childList:true,subtree:true});
+  }
+
+  // draggable nav: press → glass bubble grows, drag to switch tab
+  const nav=$('nav'),bl=$('blob');let st=null,dragged=false;
+  nav.addEventListener('pointerdown',e=>{
+    const on=document.querySelector('.nv.on');if(!on)return;
+    st={x:e.clientX,l:on.offsetLeft,w:on.offsetWidth,m:false};dragged=false;nav.classList.add('press');
+  });
+  addEventListener('pointermove',e=>{
+    if(!st)return;const dx=e.clientX-st.x;
+    if(!st.m&&Math.abs(dx)>5){st.m=true;nav.classList.add('drag')}
+    if(!st.m)return;
+    const max=nav.offsetWidth-7-st.w;bl.style.left=Math.max(7,Math.min(max,st.l+dx))+'px';
+  });
+  const end=()=>{
+    if(!st)return;nav.classList.remove('press','drag');
+    if(st.m){
+      dragged=true;setTimeout(()=>dragged=false,60);
+      const cx=bl.offsetLeft+bl.offsetWidth/2;let best=null,bd=1e9;
+      document.querySelectorAll('.nv').forEach(b=>{if(!b.offsetWidth)return;const d=Math.abs(b.offsetLeft+b.offsetWidth/2-cx);if(d<bd){bd=d;best=b}});
+      if(best){if(best.dataset.p!==page)go(best.dataset.p);else placeBlob()}
+      if(tg&&tg.HapticFeedback)try{tg.HapticFeedback.selectionChanged()}catch(_){}
+    }
+    st=null;
+  };
+  addEventListener('pointerup',end);addEventListener('pointercancel',end);
+  nav.addEventListener('click',e=>{if(dragged){e.stopImmediatePropagation();e.preventDefault()}},true);
+})();
 </script>
 </body>
 </html>
